@@ -14,7 +14,7 @@
 #include <stdlib.h>
 
 static size_t	count_words(char const *s, char c);
-static char		**allocate(char **result, char const *s, size_t count, char c);
+static int		allocate(char **result, char const *s, size_t count, char c);
 static void		copy_words(char **result, char const *s, char c, size_t wcount);
 
 char	**ft_split(char const *s, char c)
@@ -26,7 +26,7 @@ char	**ft_split(char const *s, char c)
 	result = malloc((wcount + 1) * sizeof(char *));
 	if (result == NULL)
 		return (NULL);
-	if (allocate(result, s, wcount, c) == NULL)
+	if (!allocate(result, s, wcount, c))
 	{
 		free(result);
 		return (NULL);
@@ -56,7 +56,7 @@ static size_t	count_words(char const *s, char c)
 	return (count);
 }
 
-static char	**allocate(char **result, char const *s, size_t count, char c)
+static int	allocate(char **result, char const *s, size_t count, char c)
 {
 	size_t	i;
 	size_t	start;
@@ -76,11 +76,11 @@ static char	**allocate(char **result, char const *s, size_t count, char c)
 		{
 			while (x > 0)
 				free(result[--x]);
-			return (NULL);
+			return (0);
 		}
 		x++;
 	}
-	return (result);
+	return (1);
 }
 
 static void	copy_words(char **result, char const *s, char c, size_t wcount)
