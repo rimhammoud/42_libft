@@ -23,7 +23,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	nstr = malloc(len + 1);
 	if (nstr == NULL)
 		return (NULL);
-	nstr[0] = '\0';
 	ft_strlcpy(nstr, s1, len + 1);
 	ft_strlcat(nstr, s2, len + 1);
 	return (nstr);

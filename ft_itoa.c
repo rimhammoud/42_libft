@@ -15,7 +15,7 @@
 #include "libft.h"
 
 static size_t	count_digits(long nb);
-static void		reverse_str(char *s, size_t start);
+static void		reverse_str(char *s, size_t start, size_t len);
 
 char	*ft_itoa(int n)
 {
@@ -41,7 +41,7 @@ char	*ft_itoa(int n)
 		nb /= 10;
 	}
 	s[i] = '\0';
-	reverse_str(s, n < 0);
+	reverse_str(s, n < 0, i);
 	return (s);
 }
 
@@ -65,12 +65,12 @@ static size_t	count_digits(long nb)
 	return (count);
 }
 
-static void	reverse_str(char *s, size_t start)
+static void	reverse_str(char *s, size_t start, size_t len)
 {
 	size_t	end;
 	char	temp;
 
-	end = ft_strlen(s) - 1;
+	end = len - 1;
 	while (start < end)
 	{
 		temp = s[start];

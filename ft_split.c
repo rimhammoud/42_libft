@@ -13,9 +13,8 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-static size_t	count_words(char const *s, char c, size_t i);
+static size_t	count_words(char const *s, char c);
 static char		**allocate(char **result, char const *s, size_t count, char c);
-static size_t	char_count(char const *s, char c, size_t start);
 static void		copy_words(char **result, char const *s, char c, size_t wcount);
 
 char	**ft_split(char const *s, char c)
@@ -23,7 +22,7 @@ char	**ft_split(char const *s, char c)
 	size_t	wcount;
 	char	**result;
 
-	wcount = count_words(s, c, 0);
+	wcount = count_words(s, c);
 	result = malloc((wcount + 1) * sizeof(char *));
 	if (result == NULL)
 		return (NULL);
@@ -36,21 +35,23 @@ char	**ft_split(char const *s, char c)
 	return (result);
 }
 
-static size_t	count_words(char const *s, char c, size_t i)
+static size_t	count_words(char const *s, char c)
 {
+	size_t	i;
 	size_t	count;
 
 	i = 0;
 	count = 0;
-	while (s[i] == c && s[i] != '\0')
-		i++;
-	while (s[i] != '\0')
+	while (s[i])
 	{
-		while (s[i] != c && s[i] != '\0')
+		while (s[i] && s[i] == c)
 			i++;
-		while (s[i] == c && s[i] != '\0')
-			i++;
-		count++;
+		if (s[i])
+		{
+			count++;
+			while (s[i] && s[i] != c)
+				i++;
+		}
 	}
 	return (count);
 }
@@ -82,41 +83,23 @@ static char	**allocate(char **result, char const *s, size_t count, char c)
 	return (result);
 }
 
-static size_t	char_count(char const *s, char c, size_t start)
-{
-	size_t	count;
-
-	count = 0;
-	while (s[start] == c && s[start] != '\0')
-		start++;
-	while (s[start] != c && s[start] != '\0')
-	{
-		count++;
-		start++;
-	}
-	return (count);
-}
-
 static void	copy_words(char **result, char const *s, char c, size_t wcount)
 {
 	size_t	x;
 	size_t	y;
 	size_t	i;
-	size_t	chcount;
 
 	i = 0;
 	x = 0;
-	y = 0;
 	while (x < wcount)
 	{
 		while (s[i] == c && s[i] != '\0')
 			i++;
-		chcount = char_count(s, c, i);
-		while (y < chcount)
+		y = 0;
+		while (s[i] && s[i] != c)
 			result[x][y++] = s[i++];
 		result[x][y] = '\0';
 		x++;
-		y = 0;
 	}
 	result[x] = NULL;
 }
