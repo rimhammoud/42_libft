@@ -143,4 +143,4 @@ The following resources were used to understand C functions, their expected beha
 
 ### AI Usage
 
-ChatGPT was used as a learning resource throughout the project to explain C programming concepts, clarify function specifications, discuss edge cases, review and debug implementations, prepare function tests, and assist with README documentation.
+AI was used as a learning resource throughout the project to explain C programming concepts, clarify function specifications, discuss edge cases, review and debug implementations, prepare function tests, and assist with README documentation.
